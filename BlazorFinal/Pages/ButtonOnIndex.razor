@@ -1,0 +1,26 @@
+@inject EventList eventsDB;
+
+
+<button disabled="@ButtonDisabled" class="@BootStyle" @onclick="args => HandleIndex(args)">@ButtonPurpose</button>
+
+
+
+
+@code
+{
+    [Parameter] public EventCallback<int> SendIndex {get;set;}
+    [Parameter] public int EventId {get;set;}
+    [Parameter] public string ButtonPurpose{get;set;}
+    [Parameter] public  bool ButtonDisabled{get;set;}
+    [Parameter] public string BootStyle {get;set;}
+
+
+
+    public async Task HandleIndex(MouseEventArgs args)
+    {
+        await SendIndex.InvokeAsync(EventId);
+    }
+    
+
+
+}

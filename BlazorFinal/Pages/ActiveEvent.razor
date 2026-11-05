@@ -1,0 +1,118 @@
+@page "/active-event/{eventId:int}"
+@using System.Reflection.Metadata
+@inject NavigationManager navManager
+
+@inject EventList eventsDB
+
+<table class="table table-light table-striped  table-hover">
+
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">Date</th>
+            <th scope="col">Registered</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        <tr>
+            <td>
+                @activeEvent.Name
+            </td>
+            <td>
+                @activeEvent.Location
+            </td>
+            <td>
+                @activeEvent.Date
+            </td>
+            <td>
+                @activeEvent.GetParcitipantsCount()
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<button class="btn btn-primary" @onclick="HandleEndEvent">End Event</button>
+
+
+<table class="table table-light table-striped  table-hover">
+
+    <thead>
+        <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Second Name</th>
+            <th scope="col">Attented</th>
+            <th scope="col">Arrival Time</th>
+        </tr>
+    </thead>
+
+    <tbody class="table-group-divider">
+        @foreach(var attendee in participantsArr)
+        {
+            <tr>
+                <td>
+                    @attendee.FirstName
+                </td>
+
+                <td>
+                    @attendee.SecondName
+                </td>
+
+                <td>
+                 
+                    <InputCheckbox  @bind-value="attendee.Attended" @onclick="() => attendee.ArrivalTime = DateTime.Now"></InputCheckbox>
+                
+                </td>
+                <td>
+                    @if (attendee.Attended)
+                    {
+                        @attendee.ArrivalTime.ToString("hh:mm:ss")
+                    }
+                    else
+                    {
+                        <p>Not arrived</p>
+                    }
+                </td>
+
+            </tr>
+        }
+  
+             
+    </tbody>
+</table>
+
+@code
+{
+
+    Event activeEvent;
+    [Parameter]public int eventId {get;set;}
+    private  Participant[] participantsArr;
+
+
+    protected override void OnInitialized()
+    {
+        activeEvent = eventsDB.GetEvent(eventId);
+        participantsArr = activeEvent.GetParcitipantArray();   
+    }
+
+    private void HandleEndEvent()
+    {
+        activeEvent.SetAttntedTotal(CountTotalAttnd());
+        eventsDB.MoveEventToHistory(activeEvent.EventId);
+        navManager.NavigateTo("/tracker");
+    }
+
+    private int CountTotalAttnd()
+    {
+        int x = 0;
+
+        for (int i = 0; i < participantsArr.Length; i++)
+        {
+            if (participantsArr[i].Attended)
+                x++;
+        }
+
+        return x;
+    }
+
+}

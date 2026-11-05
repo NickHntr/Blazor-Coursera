@@ -1,0 +1,101 @@
+@page  "/event-history/{EventId:int}"
+@inject EventList eventsDB
+@inject NavigationManager navManager
+
+<table class="table table-light table-striped  table-hover">
+
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">Date</th>
+            <th scope="col">Attended / Registered</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        <tr>
+            <td>
+                @eventView.Name
+            </td>
+            <td>
+                @eventView.Location
+            </td>
+            <td>
+                @eventView.Date
+            </td>
+            <td>
+                @eventView.AttntedTotal / @eventView.GetParcitipantsCount()
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<table class="table table-light table-striped  table-hover">
+    
+    <thead>
+        <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Second Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Arrival Time</th>
+        </tr>
+    </thead>
+   
+    <tbody class="table-group-divider">
+        @for (int i = 0; i < participantsArr.Length; i++)
+        {
+            <tr>
+                <td>
+                    @participantsArr[i].FirstName
+                </td>
+
+                <td>
+                    @participantsArr[i].SecondName
+                </td>
+
+                <td>
+                    @participantsArr[i].Email
+                </td>
+    
+                <td>
+                    @if (participantsArr[i].Attended)
+                    {
+                        @participantsArr[i].ArrivalTime.ToString("t")
+                    }
+                    else
+                    {
+                        <p>Not Attended</p>
+                    }
+                    
+                   
+                </td>
+
+              
+            </tr>
+            }
+    </tbody>
+  
+</table>
+
+<button type="button" @onclick="GoBack"class="btn btn-primary">Back</button>
+
+@code
+{
+    [Parameter] public int EventId { get; set; }
+    Event eventView;
+    private Participant[] participantsArr;
+
+
+    protected override void OnParametersSet()
+    {
+        eventView = eventsDB.GetEventHistory(EventId);
+        participantsArr = eventView.GetParcitipantArray();
+    }
+
+    private void GoBack()
+    {
+        navManager.NavigateTo("/tracker");
+    }
+}

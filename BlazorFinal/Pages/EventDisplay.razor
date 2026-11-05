@@ -1,0 +1,149 @@
+@inject EventList eventsDB
+@inject NavigationManager navManager
+
+@if(eventArr is null || eventArr.Length == 0)
+{
+    <h5>No upcoming events, you can register new event  <NavLink href="/register">here</NavLink>.</h5>
+}
+else
+{
+    <div>
+        <table class="table table-light table-striped  table-hover">
+       
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Registered</th>
+                </tr>
+            </thead>
+            @for (int i = 0; i < eventArr.Length; i++)
+            {
+                <tbody class="table-group-divider">
+                    
+                    <tr scope="row">
+                    <td>
+                        @(i+1)
+                    </td>
+                    <td >
+                        @eventArr[i].Name
+                    </td>
+
+                    <td>
+                        @eventArr[i].Location
+                    </td>
+
+                    <td>
+                        @eventArr[i].Date
+                    </td>
+                    <td>
+                       @eventArr[i].GetParcitipantsCount() / @eventArr[i].ParticipantMax
+                    </td>     
+                </tr>
+
+            
+
+                    <tr scope="row">
+                    <td>
+                        
+                           
+                    </td>
+                        
+                    <td>
+                            <ButtonOnIndex BootStyle="@buttonClassforStart[i]" ButtonDisabled="@TrueOrFalse[i]"
+                                           ButtonPurpose="Start Event" EventId="@eventArr[i].EventId" SendIndex="HandleStartEvent" />
+                    </td>
+
+                    <td>  
+
+                            @if (TrueOrFalse[i])
+                            {
+                                <h6 style="color:red;">To Start Event Add at least 1 parcitipant</h6>
+                            }
+
+                    </td>
+
+                    <td>
+
+                            <ButtonOnIndex BootStyle="btn btn-primary" ButtonPurpose="Manage Event"
+                                           SendIndex="ManageParcitipantsButton" EventId="eventArr[i].EventId" />
+
+                    </td>
+                    <td>
+                            <ButtonOnIndex BootStyle="btn btn-danger" ButtonPurpose="Delete" SendIndex="HandleEventDelete"
+                                           EventId="eventArr[i].EventId" />
+                    </td>
+                   
+                </tr>
+
+            </tbody>
+        }
+        </table>
+    </div>
+}
+
+
+
+@code
+{
+    private Event[] eventArr;
+    public bool isCollapsed = false;
+    private bool[] TrueOrFalse;
+    private string[] buttonClassforStart;
+
+
+    protected override void OnParametersSet()
+    {
+        eventArr = eventsDB.GetEventArray();
+        if(eventArr.Length != 0)
+        {
+            buttonClassforStart = new string[eventArr.Length];
+            TrueOrFalse = HandleBoolArray(eventArr);
+
+        }
+
+    }
+
+    private bool[] HandleBoolArray(Event[] eventArr)
+    {
+        bool[] toReturn = new bool[eventArr.Length];
+        for(int i = 0; i < eventArr.Length; i++)
+        {
+            if(eventArr[i].GetParcitipantsCount() == 0)
+            {
+                toReturn[i] = true;
+                buttonClassforStart[i] = "btn btn-outline-danger";
+            }
+            else
+                buttonClassforStart[i] = "btn btn btn-success";
+            
+        }
+
+        return toReturn;
+    }
+
+
+
+    private void HandleDetailsNavigation(int id)
+    {
+        navManager.NavigateTo(@"/details:{@id}");
+    }
+
+    private void HandleEventDelete(int deleteIndex)
+    {
+        eventsDB.DeleteEvent(deleteIndex);
+        eventArr = eventsDB.GetEventArray();
+    }
+
+    private void ManageParcitipantsButton(int id)
+    {
+        navManager.NavigateTo($"/event-view/{@id}");
+    }
+
+    private void HandleStartEvent(int i)
+    {
+        navManager.NavigateTo($"/active-event/{i}");
+    }
+}

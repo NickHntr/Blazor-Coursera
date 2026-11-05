@@ -1,0 +1,62 @@
+@page "/edit/{eventId:int}"
+@inject EventList eventDB
+@inject NavigationManager navManager
+
+<EditForm Model="@eventToEdit" OnValidSubmit="@HandleValidSubmit">
+
+    <DataAnnotationsValidator/>
+    
+<div class=" form-group mb-3">
+<label for="eventName">Name of event</label>
+    <h4><input @bind-value="eventToEdit.Name" type="text" id="eventName" class="form-control" ></h4>
+    <ValidationMessage For="@(() => eventToEdit.Name)" />
+</div>
+
+<div class=" form-group mb-3">
+<label for="description">Location</label>
+<InputTextArea @bind-value="eventToEdit.Location" id="description" class="form-control" />
+<ValidationMessage For="@(() => eventToEdit.Location)" />
+</div>
+
+
+<div class="form-group mb-3">
+    <label>Event date:</label>
+        
+    <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="eventToEdit.Date" />
+    <ValidationMessage For="@(() => eventToEdit.Date)" />
+    
+    
+            <label for="max_par">Parcitipants Limit</label>
+
+            <InputNumber  EnableMinMax="@true" 
+                Min="@eventToEdit.GetParcitipantsCount()"
+                    @bind-Value="eventToEdit.ParticipantMax" />
+        
+      
+        
+</div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+    <ValidationSummary />
+</EditForm>
+
+
+@code
+{
+    [Parameter] public int eventId{get;set;}
+
+    private Event eventToEdit;
+
+    protected override void OnInitialized()
+    {
+        eventToEdit = eventDB.GetEvent(eventId);
+    }
+
+
+    private void HandleValidSubmit()
+    {
+        eventDB.EditEvent(eventToEdit, eventId);
+        navManager.NavigateTo($"/event-view/{eventId}");
+    }
+}

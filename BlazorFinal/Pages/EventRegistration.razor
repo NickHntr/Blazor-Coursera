@@ -1,0 +1,67 @@
+@page "/register"
+
+@using BlazorFinal.StateObjects
+
+@inject EventState eventState
+@inject NavigationManager navManager
+@inject EventList eventsDB
+
+<PageTitle>Event Registration</PageTitle>
+
+<h3>Event Registration</h3>
+
+<EditForm Model="@eventState" OnValidSubmit="@HandleValidSubmit">
+
+    <DataAnnotationsValidator/>
+    
+    <div class="form-group mb-3">
+        <label for="name">Name your event:</label>
+        <InputText id="name" @bind-Value="eventState.Name" class="form-control" />
+        <ValidationMessage For="@(() => eventState.Name)" />
+    </div>
+
+
+    <div class="form-group mb-3">
+        <label for="location">Event Location:</label>
+        <InputText  id="location"@bind-Value="eventState.Location" class="form-control" />
+        <ValidationMessage For="@(() => eventState.Location)" />
+    </div>
+
+
+    <div class="form-group mb-3">
+        <label for="date">Event date:</label>
+        <InputDate id="date" Type="InputDateType.DateTimeLocal" @bind-Value:format="dd-MM-yyyy"  @bind-Value="eventState.Date" />
+        <ValidationMessage For="@(() => eventState.Date)" />
+        <label for="max_par">Parcitipants Limit</label>
+        <InputNumber @bind-Value="eventState.ParticipantMax" />
+    </div>
+
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    
+    <ValidationSummary />
+</EditForm>
+
+@code {
+
+    [Parameter] public int eventId { get; set; }
+    private Event userEvent = new Event();
+
+
+    private void HandleValidSubmit()
+    {
+        userEvent.Name = eventState.Name;
+        userEvent.Location = eventState.Location;
+        userEvent.Date = eventState.Date;
+        userEvent.ParticipantMax = eventState.ParticipantMax;
+        userEvent.SetEventId();
+        eventsDB.AddEvent(userEvent);
+
+        eventState.Name = string.Empty;
+        eventState.Location = string.Empty;
+        navManager.NavigateTo("/");
+    }
+
+    
+}

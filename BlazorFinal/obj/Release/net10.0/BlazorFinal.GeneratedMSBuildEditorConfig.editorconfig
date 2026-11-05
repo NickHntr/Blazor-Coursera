@@ -1,0 +1,98 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.VerifyReferenceTrimCompatibility = 
+build_property.VerifyReferenceAotCompatibility = 
+build_property.TargetFramework = net10.0
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EntryPointFilePath = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = BlazorFinal
+build_property.RootNamespace = BlazorFinal
+build_property.ProjectDir = C:\Users\astaf\Desktop\test\BlazorFinal\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = false
+build_property.RazorLangVersion = 10.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\astaf\Desktop\test\BlazorFinal
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Pages/ActiveEvent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWN0aXZlRXZlbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Pages/AddParcitipant.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkUGFyY2l0aXBhbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Pages/ButtonOnIndex.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQnV0dG9uT25JbmRleC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Pages/EventCard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXZlbnRDYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Pages/EventCheckin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXZlbnRDaGVja2luLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Pages/EventDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXZlbnREZXRhaWxzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Pages/EventDisplay.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXZlbnREaXNwbGF5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Pages/EventHistoryView.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXZlbnRIaXN0b3J5Vmlldy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Pages/EventRegistration.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXZlbnRSZWdpc3RyYXRpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Pages/EventsHistory.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXZlbnRzSGlzdG9yeS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Pages/EventView.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXZlbnRWaWV3LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Pages/NotFound.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTm90Rm91bmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-cbz18s3g32
+
+[C:/Users/astaf/Desktop/test/BlazorFinal/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-uv0v9uup0j

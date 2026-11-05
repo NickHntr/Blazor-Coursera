@@ -1,0 +1,81 @@
+@using BlazorFinal.StateObjects
+@inject ParticipantState participantState
+@inject EventList eventDB
+
+<EditForm Model="@participantState" OnValidSubmit="HandleValidSubmit">
+<DataAnnotationsValidator />
+
+        <div class="form-group mb-3">
+            <label>First Name:</label>
+            <InputText @bind-Value="participantState.FirstName" class="form-control" />
+            <ValidationMessage For="@(() => participantState.FirstName)" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Second Name:</label>
+            <InputText @bind-Value="participantState.SecondName" class="form-control" />
+            <ValidationMessage For="@(() => participantState.SecondName)" />
+        </div>
+        
+
+        <div class="form-group mb-3">
+            <label>Email:</label>
+            <InputText @bind-Value="participantState.Email" class="form-control" />
+            <ValidationMessage For="@(() => participantState.Email)" />
+        </div>
+    <button type="submit" class="btn btn-primary">@EditOrRegister</button>
+    <button class="btn btn-primary" @onclick="HandleCollapse">Back</button>
+</EditForm>
+
+
+@code
+{
+    Participant participant = new Participant();
+
+    [Parameter] public int participantID { get; set; }
+    [Parameter] public int Id { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnRegistered {get;set;}
+    [Parameter] public string EditOrRegister{get;set;}
+    [Parameter] public EventCallback Collapse{get;set;}
+    private Event viewEvent;
+
+
+    private void HandleValidSubmit()
+    {
+        participant.FirstName = participantState.FirstName;
+        participant.SecondName = participantState.SecondName;
+        participant.Email = participantState.Email;
+
+        if (EditOrRegister == "Edit")
+        {
+            viewEvent.EditParcitipant(participantID, participant);
+        }
+        else
+        {
+            viewEvent.AddParcitipant(participant);
+        }
+
+        participantState.FirstName = string.Empty;
+        participantState.SecondName = string.Empty;
+        participantState.Email = string.Empty;
+        OnRegistered.InvokeAsync();
+    }
+
+
+
+    protected override void OnInitialized()
+    {
+        viewEvent = eventDB.GetEvent(Id);
+
+        if (EditOrRegister == "Edit")
+        {
+            participant = viewEvent.GetParcitipant(participantID);
+            participantState.FirstName = participant.FirstName;
+            participantState.SecondName = participant.SecondName;
+            participantState.Email = participant.Email;
+        }
+    }
+
+    private void HandleCollapse() => Collapse.InvokeAsync();
+   
+}

@@ -1,0 +1,84 @@
+@page "/tracker"
+
+@inject EventList eventsDB
+@inject NavigationManager navManager
+
+@if (historyArr is null || historyArr.Length == 0)
+{
+    <h5>No events</h5>
+}
+else
+{
+    <div>
+        <table class="table table-light table-striped  table-hover">
+            @for (int i = 0; i < historyArr.Length; i++)
+            {
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Attented/Registered</th>
+                    </tr>
+                </thead>
+
+                <tbody class="table-group-divider">
+                    <tr>
+                        <td>
+                            @(i + 1)
+                        </td>
+                        <td scope="row">
+                            @historyArr[i].Name
+                        </td>
+
+                        <td>
+                            @historyArr[i].Location
+                        </td>
+
+                        <td>
+                            @historyArr[i].Date
+                        </td>
+                        <td>
+                          @historyArr[i].AttntedTotal  / @historyArr[i].GetParcitipantsCount()
+                        </td>
+                    </tr>
+
+            
+                    <tr>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            <ButtonOnIndex BootStyle="btn btn-primary" ButtonPurpose="View Event" SendIndex="HandleEventView"
+                                           EventId="historyArr[i].EventId" />
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                </tbody>
+            }
+        </table>
+    </div>
+}
+
+
+
+@code
+{
+    private Event[] historyArr;
+  
+
+    protected override void OnInitialized()
+    {
+        historyArr = eventsDB.GetEventHistoryArray();
+    }
+
+
+    private void HandleEventView(int id)
+    {
+        navManager.NavigateTo($"/event-history/{id}");
+    }
+}

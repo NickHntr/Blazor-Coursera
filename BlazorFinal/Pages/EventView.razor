@@ -1,0 +1,216 @@
+@page "/event-view/{eventId:int}"
+@inject NavigationManager navManager
+@inject EventList eventDB
+
+<table class="table table-light table-striped  table-hover">
+
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">Date</th>
+            <th scope="col">Registered</th>
+        </tr>
+    </thead>
+        <tbody class="table-group-divider">
+            <tr>
+                <td>
+                    @viewEvent.Name
+                </td>
+                <td>
+                    @viewEvent.Location
+                </td>
+                <td>
+                    @viewEvent.Date
+                </td>
+                <td>
+                    @viewEvent.GetParcitipantsCount()/@viewEvent.ParticipantMax
+                </td>
+            </tr>
+        </tbody>
+</table>
+
+
+
+
+<table class="table table-light  table-borderless align-top">
+    <thead>
+        <tr>
+            <td>
+                @if (isCollapsed && viewEvent.GetParcitipantsCount() < viewEvent.ParticipantMax)
+                {
+                    <button class="btn btn-primary" @onclick="AddParcitipantsButton">Add Parcitipant</button>
+                }
+            </td>
+           
+            <td>
+                  
+                <ButtonOnIndex BootStyle="@buttonClassforStart" ButtonDisabled="@TrueOrFalse" ButtonPurpose="Start Event" EventId="@viewEvent.EventId"
+                               SendIndex="HandleStartEvent" />
+
+                <ButtonOnIndex BootStyle="btn btn-primary" ButtonPurpose="Edit Event" EventId="@viewEvent.EventId"
+                               SendIndex="HandleEventEdit" />
+                
+                <button @onclick="BackToMenu" type="button" class="btn btn-primary">Back</button>
+            </td>
+            <td>
+                @if (viewEvent.GetParcitipantsCount() == viewEvent.ParticipantMax)
+                {
+                    <h5>Parcitipant max reached!</h5>
+                }
+                @if (viewEvent.GetParcitipantsCount() == 0)
+                {
+                    <h6 style="color:red">To Start Event Add at least 1 parcitipant</h6>
+                }
+            </td>
+        </tr>
+    </thead>
+</table>
+
+
+
+
+@if (isCollapsed)
+{
+<table class="table table-light table-striped  table-hover">
+
+    <thead>
+        <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Second Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+
+    <tbody class="table-group-divider">
+        @for(int i = 0; i < participantsArr.Length; i++)
+        {
+            <tr>
+                <td>
+                    @participantsArr[i].FirstName
+                </td>
+
+                <td>
+                    @participantsArr[i].SecondName
+                </td>
+
+                <td>
+                    @participantsArr[i].Email
+                </td>
+
+                <td>
+                        <ButtonOnIndex BootStyle="btn btn-danger" ButtonPurpose="Delete" SendIndex="DeleteParcitipantsButton"
+                                           EventId="i"/>
+                        <ButtonOnIndex BootStyle="btn btn-primary" ButtonPurpose="Edit" SendIndex="HandleEditParcitipants"
+                                       EventId="i" />
+        
+                </td>
+            
+                        
+                
+            </tr>
+        }
+                    @if (participantsArr.Length == 0)
+                    {
+                        <tr>
+                            <td><h5>No Registered Participants</h5></td>
+                            <td></td>
+
+                            <td></td>
+
+                            <td></td>
+                        </tr>
+                    }
+             
+    </tbody>
+</table>
+}
+
+else
+{
+    <AddParcitipant EditOrRegister="@RegisterOrEdit" Id="@viewEvent.EventId" participantID="@ParId"
+                    OnRegistered="AddParcitipantsButton" Collapse="HandleCollapse" />
+
+   @*  @if (RegisterOrEdit != "Edit")
+    {
+        <button class="btn btn-primary" @onclick="HandleCollapse">Back</button>
+    } *@
+    
+}
+
+
+@code
+{
+    [Parameter] public int eventId { get; set; }
+    private Event viewEvent;
+    private Participant[] participantsArr;
+    private bool isCollapsed = true;
+    private string RegisterOrEdit;
+    private bool TrueOrFalse;
+    private int ParId;
+    private string buttonClassforStart;
+
+
+    protected override void OnInitialized()
+    {
+        viewEvent = eventDB.GetEvent(eventId);
+        participantsArr = viewEvent.GetParcitipantArray();
+
+        if (viewEvent.GetParcitipantsCount() == 0)
+        {
+            TrueOrFalse = true;
+            buttonClassforStart = "btn btn-outline-danger";
+        }
+    }
+
+
+    private void DeleteParcitipantsButton(int deleteIndex)
+    {
+        viewEvent.RemoveParcitipant(deleteIndex);
+        participantsArr = viewEvent.GetParcitipantArray();
+        if (TrueOrFalse == false && viewEvent.GetParcitipantsCount() == 0)
+        {
+            TrueOrFalse = true;
+            buttonClassforStart = "btn btn-outline-danger";
+        }
+    }
+
+    public void HandleCollapse() => isCollapsed = !isCollapsed;
+
+
+    private void AddParcitipantsButton()
+    {
+
+        RegisterOrEdit = "Register";
+        HandleCollapse();
+        participantsArr = viewEvent.GetParcitipantArray();
+        if (TrueOrFalse == true && viewEvent.GetParcitipantsCount() > 0)
+        {
+            TrueOrFalse = false;
+            buttonClassforStart = "btn btn-success";
+        }
+    }
+
+    private void HandleEditParcitipants(int i)
+    {
+        ParId = i;
+        RegisterOrEdit = "Edit";
+        HandleCollapse();        
+    }
+
+    private void HandleStartEvent(int i)
+    {
+        navManager.NavigateTo($"/active-event/{i}");
+    }
+
+    private void HandleEventEdit(int i)
+    {
+        navManager.NavigateTo($"/edit/{i}");
+    }
+
+    private void BackToMenu()
+    {
+        navManager.NavigateTo("/");
+    }
+}
