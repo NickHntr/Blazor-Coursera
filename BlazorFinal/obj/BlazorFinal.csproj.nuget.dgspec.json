@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\astaf\\Desktop\\test\\BlazorFinal\\BlazorFinal.csproj": {}
+    "C:\\Users\\astaf\\Desktop\\test\\Blazor-Coursera\\BlazorFinal\\BlazorFinal.csproj": {}
   },
   "projects": {
-    "C:\\Users\\astaf\\Desktop\\test\\BlazorFinal\\BlazorFinal.csproj": {
+    "C:\\Users\\astaf\\Desktop\\test\\Blazor-Coursera\\BlazorFinal\\BlazorFinal.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\astaf\\Desktop\\test\\BlazorFinal\\BlazorFinal.csproj",
+        "projectUniqueName": "C:\\Users\\astaf\\Desktop\\test\\Blazor-Coursera\\BlazorFinal\\BlazorFinal.csproj",
         "projectName": "BlazorFinal",
-        "projectPath": "C:\\Users\\astaf\\Desktop\\test\\BlazorFinal\\BlazorFinal.csproj",
+        "projectPath": "C:\\Users\\astaf\\Desktop\\test\\Blazor-Coursera\\BlazorFinal\\BlazorFinal.csproj",
         "packagesPath": "C:\\Users\\astaf\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\astaf\\Desktop\\test\\BlazorFinal\\obj\\",
+        "outputPath": "C:\\Users\\astaf\\Desktop\\test\\Blazor-Coursera\\BlazorFinal\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
